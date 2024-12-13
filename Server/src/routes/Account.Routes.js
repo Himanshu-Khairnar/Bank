@@ -6,6 +6,6 @@ const router = Router();
 
 router.route('/').get(AllAccounts)
 
-router.route('/:id').get(SingleAccount)
+router.route('/:userId').get(SingleAccount)
 
 export default router
