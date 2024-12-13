@@ -19,7 +19,9 @@ export const AllAccounts = asyncHandler(async (req, res, next) => {
             ON 
                 U.id = A.user_id
             GROUP BY 
-                U.id, U.username, U.email, A.balance;
+                U.id, U.username, U.email, A.balance
+                 ORDER BY
+            U.created_at ASC;
         `;
 
         const [accounts] = await pool.query(query); // Execute the SQL query
@@ -63,7 +65,7 @@ export const SingleAccount = asyncHandler(async (req, res, next) => {
             GROUP BY 
                 A.id, U.id, A.transaction_type
             ORDER BY 
-                A.created_at DESC;
+                A.created_at ASC;
         `;
 
         const [userAccount] = await pool.query(query, [userId]); // Execute query with userId
