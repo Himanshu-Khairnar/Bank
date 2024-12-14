@@ -117,12 +117,7 @@ export const withdraw = async ({amount,userId}:{amount:string,userId:string}) =>
 
 export const getBalance = async (userId: string) => {
     try {
-        const token = Cookies.get("accesstoken");
-        console.log("Access token:", token); // Debugging
-
-        if (!token) {
-            throw new Error("Access token not found");
-        }
+        
 
         const res = await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
             method: 'GET',
@@ -136,8 +131,10 @@ export const getBalance = async (userId: string) => {
         if (!res.ok) {
             throw new Error(`Error fetching balance: ${res.statusText}`);
         }
+        const data =  await res.json();
+        console.log(data);
+        return data;
 
-        return res.json();
     } catch (error) {
         console.error("Error in getBalance:", error);
         throw error;

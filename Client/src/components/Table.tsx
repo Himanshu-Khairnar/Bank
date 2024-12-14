@@ -15,7 +15,7 @@ import {
 const TABLE_HEAD = ["Transaction Type", "Amount", "Total Balance", "Transaction Time"];
 
 export function TransactionsTable({ detail :any}) {
-    const transactions = detail?.data?.userAccount || []; // Extracting user account data from props
+     // Extracting user account data from props
 
     return (
         <Card className="h-full w-full">
