@@ -7,11 +7,15 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
-import {login} from '../Actions/user.action.js'
+import {login} from '../Actions/user.action.ts'
+import { useNavigate } from 'react-router-dom';
+
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    role:'user'
   });
 
   const handleChange = (e) => {
@@ -25,9 +29,12 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+
     const user = await login(formData);
-    
+    const userId = user.data.user.id;
+
+    console.log(userId)
+    user && navigate(`/dashboard/${userId}`)    
   };
 
   return (

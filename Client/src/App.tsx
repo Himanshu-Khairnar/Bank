@@ -4,7 +4,7 @@ import Home from './Pages/Home'
 import LoginPage from './Pages/LoginPage'
 import SignUpPage from './Pages/SignUpPage'
 import Dashboard from './Pages/Dashboard'
-import AdminDashboard from './Pages/adminDashboard'
+import AdminDashboard from './Pages/AdminDashboard.js'
 import SingleUser from './Pages/SingleUser'
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/register' element={<SignUpPage/>}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/dashboard/:userId' element={<Dashboard/>}/>
         <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
         <Route path='/admin/user/:userId' element={<SingleUser/>}/>
       </Routes>

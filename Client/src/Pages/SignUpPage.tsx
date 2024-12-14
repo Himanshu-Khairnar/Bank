@@ -9,11 +9,17 @@ import {
 import { Link } from 'react-router-dom';
 
 import { Alert } from '@material-tailwind/react'
+import { signup } from '../Actions/user.action.ts'
+import { useNavigate } from 'react-router-dom';
+
+
 const SignPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: ''
+    password: '',
+    role:'user'
   });
 
   const [confrimPassword, setConfrimPassword] = useState('');
@@ -32,13 +38,13 @@ const SignPage = () => {
     setConfrimPassword(confrimPassword);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     confrimPassword !== formData.password && setAlert(true)
 
 
-    console.log('Form Data:', formData);
-
+    const user = await signup(formData);
+    user && navigate('/login')
   };
 
   return (
@@ -162,3 +168,7 @@ const SignPage = () => {
 };
 
 export default SignPage;
+function login(formData: { username: string; email: string; password: string; }) {
+  throw new Error('Function not implemented.');
+}
+

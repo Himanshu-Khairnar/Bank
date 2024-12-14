@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { pool } from "../Database.js"
 import jwt from "jsonwebtoken"
-
+    
 const generateAccessToken = async (user) => {
     try {
 
@@ -28,7 +28,7 @@ export const registerUser = asyncHandler(async (req, res, next) => {
     try {
         const { username, email, password, role } = req.body;
 
-        if (!username || !email || !password)
+        if (!username || !email || !password || !role)  
             throw new ApiError(400, "All fields are required")
 
 
@@ -41,7 +41,7 @@ export const registerUser = asyncHandler(async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, salt)
 
 
-        const user = await pool.query("INSERT INTO Users (username, email, password) VALUES (?, ?, ?)", [username, email, hashedPassword])
+        const user = await pool.query("INSERT INTO Users (username, email, password,role) VALUES (?, ?, ?,?)", [username, email, hashedPassword,role])
 
         if (!user)
             throw new ApiError(400, "Couldn't insert User")
@@ -77,9 +77,10 @@ export const loginUser = asyncHandler(async (req, res, next) => {
 
         const options = {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === "production", 
+            samesite: "None"
         }
-
+      
         return res.status(200)
             .cookie("accesstoken", accessToken, options)
             .json(new ApiResponse(200, { accessToken, user }, "User logged in successfully"))

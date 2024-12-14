@@ -7,9 +7,10 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
-import Manager_image from '../assets/manager_login.svg'
-
+import { useNavigate } from 'react-router-dom';
+import {login} from '../Actions/user.action.ts'
 const Home = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -24,10 +25,10 @@ const Home = () => {
 
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
-
+    const user = await login(formData);
+    user && navigate('/admin/dashboard')
   };
 
   return (
