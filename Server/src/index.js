@@ -3,6 +3,7 @@ import app from './app.js';
 import dotenv from "dotenv";
 
 dotenv.config('./.env');
+// server starts
 
 connectDatabase().then(() => {
     app.listen(3000, () => {
