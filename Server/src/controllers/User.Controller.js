@@ -138,7 +138,7 @@ export const AccountInfo = asyncHandler(async (req, res, next) => {
                 A.created_at ASC;
         `;
 
-        const [userAccount] = await pool.query(query, [userId]); // Execute query with userId
+        const [userAccount] = await pool.query(query, [userId]); 
 
         if (userAccount.length === 0)
             throw new ApiError(404, "User not found or no transactions available");

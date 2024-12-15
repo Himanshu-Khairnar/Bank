@@ -43,8 +43,7 @@ export const AllAccounts = asyncHandler(async (req, res, next) => {
 
 export const SingleAccount = asyncHandler(async (req, res, next) => {
     try {
-        const { userId } = req.params; // Fetch userId from the request parameters
-
+        const { userId } = req.params; 
         if (!userId)
             throw new ApiError(400, "User ID is required");
 
