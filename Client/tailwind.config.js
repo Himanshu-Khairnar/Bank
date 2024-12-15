@@ -1,24 +1,10 @@
-const withMT = require("@material-tailwind/react/utils/withMT");
+// tailwind.config.js
+import { defineConfig } from 'tailwindcss';
 
-module.exports = withMT({
-	content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-
+export default defineConfig({
+	content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
 	theme: {
-		extend: {
-			animation: {
-				meteor: "meteor 5s linear infinite",
-			},
-			keyframes: {
-				meteor: {
-					"0%": { transform: "rotate(215deg) translateX(0)", opacity: 1 },
-					"70%": { opacity: 1 },
-					"100%": {
-						transform: "rotate(215deg) translateX(-500px)",
-						opacity: 0,
-					},
-				},
-			},
-		},
+		extend: {},
 	},
-	plugins: [require("@tailwindcss/forms")],
+	plugins: [],
 });
