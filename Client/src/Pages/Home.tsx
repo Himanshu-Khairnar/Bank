@@ -13,7 +13,8 @@ const Home = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    role:'admin'
   });
 
   const handleChange = (e) => {
@@ -27,6 +28,7 @@ const Home = () => {
 
   const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(formData)
     const user = await login(formData);
     user && navigate('/admin/dashboard')
   };

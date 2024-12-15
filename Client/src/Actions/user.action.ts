@@ -1,5 +1,5 @@
-
-const accessToken = localStorage.getItem("accessToken");
+import Cookies from 'js-cookie';
+const accessToken = Cookies.get("accessToken");
 
 export const login = async ({email, password,role}:{email: string; password: string; role: string;})=>{
     try {
@@ -21,7 +21,7 @@ export const login = async ({email, password,role}:{email: string; password: str
             const data = await res.json(); // Parse the JSON response once
 
             // Store accessToken and user in localStorage
-            localStorage.setItem("accessToken", data.data.accessToken);
+            Cookies.set("accessToken", data.data.accessToken);
             localStorage.setItem("user", JSON.stringify(data.data.user));
 
             console.log("Login successful!");
@@ -143,7 +143,7 @@ export const getBalance = async (userId: string) => {
 
 export const AllAccounts = async () => {
     try {
-        const res = await fetch(`http://localhost:3000/api/v1/users`, {
+        const res = await fetch(`http://localhost:3000/api/v1/accounts`, {
             method: 'GET',
             credentials:'include',
             headers: {

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getBalance } from '@/Actions/user.action.ts';
 import { UserAccount } from '@/types';  // Assuming you've defined types elsewhere
 import TranscationDialogBox from '@/components/TranscationDialogBox';
+import { TransactionsTable } from '@/components/Table';
 interface Params {
   userId: string;
 }
@@ -162,12 +163,16 @@ const Dashboard: React.FC = () => {
       </div>
 
       <div className='flex gap-4 justify-center items-center mt-[5rem]'>
-        <TranscationDialogBox detail={userDetail} type="Deposit"/>
-        <TranscationDialogBox detail={userDetail} type="Withdrawal"/>
+        <TranscationDialogBox detail={userDetail}  type="Deposit" userId={userId || ''}/>
+        <TranscationDialogBox detail={totalBalance} type="Withdrawal" userId={userId || ''}/>
       </div>
 
       <div className='flex gap-4 justify-center items-center mt-[5rem]'>
         {/* <TransactionsTable detail={userDetail} /> */}
+      </div>
+
+      <div>
+        <TransactionsTable detail={userDetail} />
       </div>
     </div>
   );
