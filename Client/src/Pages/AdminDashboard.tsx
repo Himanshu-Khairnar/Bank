@@ -9,7 +9,6 @@ import {
   SearchIcon
 } from 'lucide-react';
 
-// Define TypeScript interface for account details
 interface AccountDetails {
   id: string;
   username: string;
@@ -79,7 +78,6 @@ const AdminDashboard: React.FC = () => {
           Admin Dashboard
         </h1>
 
-        {/* Search Input */}
         <div className="relative">
           <input
             type="text"
@@ -92,7 +90,6 @@ const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Accounts Table */}
       <div className="bg-white shadow-lg rounded-xl overflow-hidden">
         <div className="">
           <table className="w-full">

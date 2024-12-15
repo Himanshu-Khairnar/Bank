@@ -75,9 +75,7 @@ const SingleUser = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
-      {/* User Profile Section */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
-        {/* User Details Card */}
         <div className="bg-white shadow-lg rounded-xl overflow-hidden transform transition-all hover:scale-105">
           <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6">
             <h2 className="text-2xl font-bold flex items-center gap-3">
@@ -97,7 +95,6 @@ const SingleUser = () => {
           </div>
         </div>
 
-        {/* Financial Summary Card */}
         <div className="bg-white shadow-lg rounded-xl overflow-hidden transform transition-all hover:scale-105">
           <div className="bg-gradient-to-r from-green-500 to-teal-600 text-white p-6">
             <h2 className="text-2xl font-bold flex items-center gap-3">
@@ -131,7 +128,6 @@ const SingleUser = () => {
         </div>
       </div>
 
-      {/* Transactions Section */}
       <div className="bg-white shadow-lg rounded-xl overflow-hidden">
         <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-6">
           <h2 className="text-2xl font-bold flex items-center gap-3">

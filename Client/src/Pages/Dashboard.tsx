@@ -75,7 +75,6 @@ const Dashboard: React.FC = () => {
     }, { total_deposit: 0, total_withdrawal: 0 });
   };
 
-  // Loading state
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -84,7 +83,6 @@ const Dashboard: React.FC = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="flex justify-center items-center h-screen bg-red-50">
@@ -118,9 +116,7 @@ const Dashboard: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome, {username}</h1>
         </div>
 
-        {/* Financial Info Display */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
-          {/* Total Deposit */}
           <div className="flex items-center justify-between p-6 bg-yellow-50 border-b border-yellow-200 rounded-lg shadow-md">
             <div className="text-left">
               <h3 className="text-xl font-semibold text-yellow-600">Total Deposit</h3>
@@ -131,7 +127,6 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Total Withdrawal */}
           <div className="flex items-center justify-between p-6 bg-red-50 border-b border-red-200 rounded-lg shadow-md">
             <div className="text-left">
               <h3 className="text-xl font-semibold text-red-600">Total Withdrawal</h3>
@@ -142,7 +137,6 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Total Balance */}
           <div className="flex items-center justify-between p-6 bg-green-50 border-b border-green-200 rounded-lg shadow-md">
             <div className="text-left">
               <h3 className="text-xl font-semibold text-green-600">Total Balance</h3>
@@ -156,7 +150,6 @@ const Dashboard: React.FC = () => {
       </div>
 
       <div className='flex flex-row gap-6 justify-center items-center mt-8'>
-        {/* Deposit Transaction Box */}
 
         <TranscationDialogBox
           detail={totalBalance}
@@ -166,7 +159,6 @@ const Dashboard: React.FC = () => {
         />
 
 
-        {/* Withdrawal Transaction Box */}
         <TranscationDialogBox
           detail={totalBalance}
           type="Withdrawal"

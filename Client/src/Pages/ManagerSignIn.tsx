@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../Actions/user.action.ts';
 
-// Custom Card Component
 const CardComponent = ({ children }: { children: React.ReactNode }) => (
   <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg mx-auto">
     {children}
   </div>
 );
 
-// Custom Button Component
 const ButtonComponent = ({ children, type, onClick }: { children: React.ReactNode; type: 'submit' | 'button'; onClick?: () => void }) => (
   <button
     type={type}
