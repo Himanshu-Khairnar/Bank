@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Card,
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
-import { Link } from 'react-router-dom';
-
-import { Alert } from '@material-tailwind/react'
-import { signup } from '../Actions/user.action.ts'
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { signup } from '../Actions/user.action.ts';
 
 const SignPage = () => {
   const navigate = useNavigate();
@@ -22,9 +11,9 @@ const SignPage = () => {
     role: 'user'
   });
 
-  const [confrimPassword, setConfrimPassword] = useState('');
-  const [Alerts, setAlert] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [alert, setAlert] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,146 +21,144 @@ const SignPage = () => {
       ...formData,
       [name]: value
     });
-
   };
+
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfrimPassword(e.target.value);
+    setConfirmPassword(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(confrimPassword)
-    console.log(formData)
-    if (confrimPassword !== formData.password) {
-      setMessage('Password are not same!')
-      return
+
+    if (confirmPassword !== formData.password) {
+      setMessage('Passwords do not match!');
+      setAlert(true);
+      return;
     }
 
     const user = await signup(formData);
-    console.log(user)
 
-    user && navigate('/login')
-    if (!user) {
-      setMessage('User Is Already Registered Successfully')
+    if (user) {
+      navigate('/login');
+    } else {
+      setMessage('User already exists');
+      setAlert(true);
     }
   };
 
   return (
-    <section className="bg-white">
-      <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-        <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
+    <section className="bg-white min-h-screen flex items-center justify-center">
+      <div className="lg:grid lg:grid-cols-12 lg:min-h-screen w-full">
+        <aside className="lg:col-span-5 relative h-96 lg:h-full">
           <img
-            alt=""
-            src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            alt="Sign Up"
+            src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80"
             className="absolute inset-0 h-full w-full object-cover"
           />
         </aside>
 
-        <main
-          className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
-        >
+        <main className="lg:col-span-7 flex items-center justify-center px-8 py-8 sm:px-12">
+          <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+            <h2 className="text-3xl font-semibold text-gray-700">Register</h2>
+            <p className="mt-2 text-gray-600">Let's get started!</p>
 
-          <Card color="transparent" shadow={false}>
-            {Alerts && <Alert color="red" className="w-96" onClose={() => setAlert(false)}>Password are not same</Alert>}
+            {alert && <div className="text-red-600 mt-3">{message}</div>}
 
-            <Typography variant="h4" color="blue-gray">
-              Register
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              Hello,Lets get started
-            </Typography>
-            <Typography variant="h6" color="red" className="mb-3">{message}</Typography>
-
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
-              <div className="mb-1 flex flex-col gap-6">
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
+            <form onSubmit={handleSubmit} className="mt-6">
+              <div className="mb-4">
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                   Your Name
-                </Typography>
-                <Input
-                  size="lg"
-                  placeholder="xyz"
+                </label>
+                <input
+                  id="username"
                   name="username"
+                  type="text"
+                  placeholder="Your Name"
                   value={formData.username}
                   onChange={handleChange}
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Your Email
-                </Typography>
-                <Input
-                  size="lg"
-                  placeholder="xyz@mail.com"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Password
-                </Typography>
-                <Input
-                  type="password"
-                  size="lg"
-                  placeholder="********"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Confrim Password
-                </Typography>
-                <Input
-                  type="password"
-                  size="lg"
-                  placeholder="********"
-                  name="password"
-                  value={confrimPassword}
-                  onChange={(e) => handleChangePassword(e)}
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
                 />
               </div>
-              <Checkbox
-                label={
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="flex items-center font-normal"
-                  >
-                    I agree the
-                    <a
-                      href="#"
-                      className="font-medium transition-colors hover:text-gray-900"
-                    >
-                      &nbsp;Terms and Conditions
-                    </a>
-                  </Typography>
-                }
-                containerProps={{ className: "-ml-2.5" }}
-              />
-              <Button type="submit" className="mt-6" fullWidth>
+
+              <div className="mb-4">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Your Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="xyz@mail.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="********"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="********"
+                  value={confirmPassword}
+                  onChange={handleChangePassword}
+                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center mb-4">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  className="mr-2"
+                  required
+                />
+                <label htmlFor="terms" className="text-sm text-gray-600">
+                  I agree to the
+                  <a href="#" className="font-medium text-indigo-600 hover:text-indigo-800 ml-1">
+                    Terms and Conditions
+                  </a>
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
                 Sign Up
-              </Button>
-              <Typography color="gray" className="mt-4 text-center font-normal">
-                Already have an account?{" "}
-                <Link to="/login" className="font-medium text-gray-900">
+              </button>
+
+              <div className="mt-4 text-center text-sm text-gray-600">
+                Already have an account?{' '}
+                <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-800">
                   Login
                 </Link>
-              </Typography>
+              </div>
             </form>
-          </Card>
+          </div>
         </main>
       </div>
     </section>
@@ -179,7 +166,3 @@ const SignPage = () => {
 };
 
 export default SignPage;
-function login(formData: { username: string; email: string; password: string; }) {
-  throw new Error('Function not implemented.');
-}
-

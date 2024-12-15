@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Card, Input, Checkbox, Button, Typography } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 import { login } from '../Actions/user.action.ts';
 import { useNavigate } from 'react-router-dom';
@@ -53,80 +52,67 @@ const LoginPage = () => {
         </aside>
 
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-          <Card color="transparent" shadow={false}>
-            <Typography variant="h4" color="blue-gray">
-              Login
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              Welcome back! Enter your details to log in.
-            </Typography>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
-              <div className="mb-1 flex flex-col gap-6">
-                <Typography variant="h6" color="red" className="-mb-3">{message}</Typography>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-96">
+            <h4 className="text-2xl text-gray-900">Login</h4>
+            <p className="text-gray-600 mt-1">Welcome back! Enter your details to log in.</p>
+            <form className="mt-8 mb-2" onSubmit={handleSubmit}>
+              <div className="mb-4">
+                {message && <p className="text-red-500 text-sm mb-2">{message}</p>}
 
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Your Email
-                </Typography>
-                <Input
-                  size="lg"
-                  placeholder="xyz@mail.com"
+                <label className="block text-sm text-gray-600">Your Email</label>
+                <input
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Password
-                </Typography>
-                <Input
-                  type="password"
-                  size="lg"
-                  placeholder="********"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
+                  placeholder="xyz@mail.com"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
               </div>
 
-              <Checkbox
-                label={
-                  <Typography variant="small" color="gray" className="flex items-center font-normal">
-                    I agree to the
-                    <a href="#" className="font-medium transition-colors hover:text-gray-900">
-                      &nbsp;Terms and Conditions
-                    </a>
-                  </Typography>
-                }
-                containerProps={{ className: "-ml-2.5" }}
-              />
+              <div className="mb-4">
+                <label className="block text-sm text-gray-600">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="********"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
 
-              <Button type="submit" className="mt-6" fullWidth>
+              <div className="mb-4">
+                <label className="inline-flex items-center text-sm text-gray-600">
+                  <input type="checkbox" className="mr-2" />
+                  I agree to the
+                  <a href="#" className="text-blue-600 hover:text-blue-800 ml-1">Terms and Conditions</a>
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+              >
                 Sign In
-              </Button>
+              </button>
 
-              <Typography color="gray" className="mt-4 text-center font-normal">
-                Don't have an account?{" "}
-                <Link to="/register" className="font-medium text-gray-900">
-                  Register
-                </Link>
-              </Typography>
-
-              <Typography color="gray" className="mt-4 text-center font-normal">
-                Are you a Manager?{" "}
-                <Link to="/" className="font-medium text-gray-900">
-                  Sign In as a Manager
-                </Link>
-              </Typography>
+              <div className="mt-4 text-center">
+                <p className="text-sm text-gray-600">
+                  Don't have an account?{' '}
+                  <Link to="/register" className="text-blue-600 hover:text-blue-800">
+                    Register
+                  </Link>
+                </p>
+                <p className="text-sm text-gray-600 mt-2">
+                  Are you a Manager?{' '}
+                  <Link to="/" className="text-blue-600 hover:text-blue-800">
+                    Sign In as a Manager
+                  </Link>
+                </p>
+              </div>
             </form>
-          </Card>
+          </div>
         </main>
       </div>
     </section>

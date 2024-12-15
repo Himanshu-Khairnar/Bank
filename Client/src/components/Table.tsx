@@ -1,5 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter, Button } from "@material-tailwind/react";
-import { DollarSign, Clock, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
+import {  Clock, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
 
 const TABLE_HEAD = ["Transaction Type", "Amount", "Total Balance", "Transaction Time"];
 
@@ -7,11 +6,11 @@ export function TransactionsTable({ detail }: { detail: any }) {
     const userAccount = detail;
 
     return (
-        <Card className="shadow-lg">
-            <CardHeader floated={false} shadow={false} className="border-b border-gray-200 p-6">
+        <div className="shadow-lg rounded-lg bg-white">
+            <div className="border-b border-gray-200 p-6">
                 <h2 className="text-xl font-semibold text-gray-800">Transaction History</h2>
-            </CardHeader>
-            <CardBody>
+            </div>
+            <div className="p-6">
                 <div className="overflow-x-auto">
                     <table className="min-w-full table-auto">
                         <thead>
@@ -49,12 +48,12 @@ export function TransactionsTable({ detail }: { detail: any }) {
                         </tbody>
                     </table>
                 </div>
-            </CardBody>
-            <CardFooter className="p-6 flex justify-center">
-                <Button variant="outlined" color="blue" className="hover:bg-blue-600 hover:text-white transition-colors">
+            </div>
+            <div className="p-6 flex justify-center">
+                <button className="px-6 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition-colors">
                     View More Transactions
-                </Button>
-            </CardFooter>
-        </Card>
+                </button>
+            </div>
+        </div>
     );
 }

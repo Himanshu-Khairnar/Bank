@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getBalance } from '@/Actions/user.action.ts';
-import { UserAccount } from '@/types';  // Assuming you've defined types elsewhere
-import { DollarSign, ArrowUpRight, ArrowDownRight, CheckCircle } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, CheckCircle } from 'lucide-react';
 import TranscationDialogBox from '@/components/TranscationDialogBox';
 import { TransactionsTable } from '@/components/Table';
 
-interface Params {
-  userId: string;
-}
+
 
 const Dashboard: React.FC = () => {
-  const { userId } = useParams<Params>();
-  const [userDetail, setUserDetail] = useState<UserAccount[]>([]);
+  const { userId } = useParams();
+  const [userDetail, setUserDetail] = useState<any>([]);
   const [totals, setTotals] = useState<{
     total_deposit: number;
     total_withdrawal: number;
@@ -40,7 +37,7 @@ const Dashboard: React.FC = () => {
         const transaction = await getBalance(userId);
 
         if (transaction?.data?.userAccount && Array.isArray(transaction.data.userAccount)) {
-          const userAccount = transaction.data.userAccount as UserAccount[];
+          const userAccount = transaction.data.userAccount;
 
           if (userAccount.length === 0) {
             setError('No transaction data found');
@@ -49,7 +46,7 @@ const Dashboard: React.FC = () => {
           }
 
           setUserDetail(userAccount);
-
+          console.log(userAccount);
           const calculatedTotals = calculateTotals(userAccount);
           setTotals({
             total_deposit: calculatedTotals.total_deposit,
@@ -70,8 +67,8 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, [userId]);
 
-  const calculateTotals = (userDetail: UserAccount[]) => {
-    return userDetail.reduce((acc, transaction) => {
+  const calculateTotals = (userDetail: any) => {
+    return userDetail.reduce((acc: { total_deposit: number; total_withdrawal: number; }, transaction: { total_deposit: any; total_withdrawal: any; }) => {
       acc.total_deposit += parseFloat(String(transaction.total_deposit)) || 0;
       acc.total_withdrawal += parseFloat(String(transaction.total_withdrawal)) || 0;
       return acc;
@@ -160,24 +157,24 @@ const Dashboard: React.FC = () => {
 
       <div className='flex flex-row gap-6 justify-center items-center mt-8'>
         {/* Deposit Transaction Box */}
-      
-          <TranscationDialogBox
-            detail={totalBalance}
-            type="Deposit"
-            userId={userId || ''}
-            color='green'
-          />
-       
+
+        <TranscationDialogBox
+          detail={totalBalance}
+          type="Deposit"
+          userId={userId || ''}
+          color='green'
+        />
+
 
         {/* Withdrawal Transaction Box */}
-          <TranscationDialogBox
-            detail={totalBalance}
-            type="Withdrawal"
-            userId={userId || ''}
-            color='red'
-          />
-        
-        </div>
+        <TranscationDialogBox
+          detail={totalBalance}
+          type="Withdrawal"
+          userId={userId || ''}
+          color='red'
+        />
+
+      </div>
 
       <div className='flex gap-4 justify-center items-center mt-8'>
         <TransactionsTable detail={userDetail} />
