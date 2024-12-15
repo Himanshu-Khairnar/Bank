@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config('./.env');
 
-
+// Start the server
 connectDatabase().then(() => {
     app.listen(3000, () => {
         console.log("Server is running on port 3000");
