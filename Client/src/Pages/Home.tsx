@@ -8,14 +8,16 @@ import {
 } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {login} from '../Actions/user.action.ts'
+import { login } from '../Actions/user.action.ts'
 const Home = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role:'admin'
+    role: 'admin'
   });
+  const [message, setMessage] = useState('');
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,11 +28,13 @@ const Home = () => {
 
   };
 
-  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData)
+
     const user = await login(formData);
     user && navigate('/admin/dashboard')
+    !user && setMessage('Invalid email or password!')
   };
 
   return (
@@ -45,17 +49,21 @@ const Home = () => {
         </aside>
 
         <main
-          className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
+          className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6 w-full"
         >
-          <Card color="transparent" shadow={false}>
+
+          <Card color="transparent" shadow={false} className=''>
             <Typography variant="h4" color="blue-gray">
               Hello Manager
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
               Nice to meet you! Enter your details to register.
             </Typography>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
+            <form className="mt-8 mb-2 w-[30rem] max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
               <div className="mb-1 flex flex-col gap-6">
+
+                <Typography variant="h6" color="red" className="-mb-3">{message}</Typography>
+
 
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
                   Your Email
@@ -115,7 +123,7 @@ const Home = () => {
                   Sign Up
                 </Link>
               </Typography>
-            
+
             </form>
           </Card>
         </main>

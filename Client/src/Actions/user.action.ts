@@ -160,7 +160,7 @@ export const AllAccounts = async () => {
 
 export const SingleAccount = async (userId:string) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+        const res = await fetch(`http://localhost:3000/api/v1/accounts/${userId}`, {
             method: 'GET',
             credentials:'include',  
             headers: {

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getBalance } from '@/Actions/user.action.ts';
 import { UserAccount } from '@/types';  // Assuming you've defined types elsewhere
+import { DollarSign, ArrowUpRight, ArrowDownRight, CheckCircle } from 'lucide-react';
 import TranscationDialogBox from '@/components/TranscationDialogBox';
 import { TransactionsTable } from '@/components/Table';
+
 interface Params {
   userId: string;
 }
@@ -114,64 +116,70 @@ const Dashboard: React.FC = () => {
   return (
     <div className="container mx-auto p-6">
       {/* Unified Card Layout */}
-      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300">
+      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-200">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome, {username}</h1>
         </div>
 
         {/* Financial Info Display */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-4">
           {/* Total Deposit */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between p-6 bg-yellow-50 border-b border-yellow-200 rounded-lg shadow-md">
             <div className="text-left">
               <h3 className="text-xl font-semibold text-yellow-600">Total Deposit</h3>
-              <p className="text-lg text-gray-800">${totalDeposit.toFixed(2)}</p>
+              <p className="text-lg text-gray-800">₹{totalDeposit.toFixed(2)}</p>
             </div>
             <div className="text-right">
-              <svg className="w-10 h-10 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5v14l11-7z" />
-              </svg>
+              <ArrowUpRight className="w-10 h-10 text-yellow-600" />
             </div>
           </div>
 
           {/* Total Withdrawal */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div className="flex items-center justify-between p-6 bg-red-50 border-b border-red-200 rounded-lg shadow-md">
             <div className="text-left">
               <h3 className="text-xl font-semibold text-red-600">Total Withdrawal</h3>
-              <p className="text-lg text-gray-800">${totalWithdrawal.toFixed(2)}</p>
+              <p className="text-lg text-gray-800">₹{totalWithdrawal.toFixed(2)}</p>
             </div>
             <div className="text-right">
-              <svg className="w-10 h-10 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
+              <ArrowDownRight className="w-10 h-10 text-red-600" />
             </div>
           </div>
 
           {/* Total Balance */}
-          <div className="flex items-center justify-between p-6">
+          <div className="flex items-center justify-between p-6 bg-green-50 border-b border-green-200 rounded-lg shadow-md">
             <div className="text-left">
               <h3 className="text-xl font-semibold text-green-600">Total Balance</h3>
-              <p className="text-lg text-gray-800">${totalBalance}</p>
+              <p className="text-lg text-gray-800">₹{totalBalance}</p>
             </div>
             <div className="text-right">
-              <svg className="w-10 h-10 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
+              <CheckCircle className="w-10 h-10 text-green-600" />
             </div>
           </div>
         </div>
       </div>
 
-      <div className='flex gap-4 justify-center items-center mt-[5rem]'>
-        <TranscationDialogBox detail={userDetail}  type="Deposit" userId={userId || ''}/>
-        <TranscationDialogBox detail={totalBalance} type="Withdrawal" userId={userId || ''}/>
-      </div>
+      <div className='flex flex-row gap-6 justify-center items-center mt-8'>
+        {/* Deposit Transaction Box */}
+      
+          <TranscationDialogBox
+            detail={totalBalance}
+            type="Deposit"
+            userId={userId || ''}
+            color='green'
+          />
+       
 
-      <div className='flex gap-4 justify-center items-center mt-[5rem]'>
-        {/* <TransactionsTable detail={userDetail} /> */}
-      </div>
+        {/* Withdrawal Transaction Box */}
+          <TranscationDialogBox
+            detail={totalBalance}
+            type="Withdrawal"
+            userId={userId || ''}
+            color='red'
+          />
+        
+        </div>
 
-      <div>
+      <div className='flex gap-4 justify-center items-center mt-8'>
         <TransactionsTable detail={userDetail} />
       </div>
     </div>

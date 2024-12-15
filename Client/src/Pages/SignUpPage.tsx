@@ -19,11 +19,12 @@ const SignPage = () => {
     username: '',
     email: '',
     password: '',
-    role:'user'
+    role: 'user'
   });
 
   const [confrimPassword, setConfrimPassword] = useState('');
   const [Alerts, setAlert] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,17 +35,25 @@ const SignPage = () => {
 
   };
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const confrimPassword = e.target.value;
-    setConfrimPassword(confrimPassword);
+    setConfrimPassword(e.target.value);
   };
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    confrimPassword !== formData.password && setAlert(true)
-
+    console.log(confrimPassword)
+    console.log(formData)
+    if (confrimPassword !== formData.password) {
+      setMessage('Password are not same!')
+      return
+    }
 
     const user = await signup(formData);
+    console.log(user)
+
     user && navigate('/login')
+    if (!user) {
+      setMessage('User Is Already Registered Successfully')
+    }
   };
 
   return (
@@ -61,9 +70,9 @@ const SignPage = () => {
         <main
           className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
         >
-          
+
           <Card color="transparent" shadow={false}>
-            {Alerts && <Alert color="red" className="w-96" onClose={() => setAlert(false)}>Password are not same</Alert>}         
+            {Alerts && <Alert color="red" className="w-96" onClose={() => setAlert(false)}>Password are not same</Alert>}
 
             <Typography variant="h4" color="blue-gray">
               Register
@@ -71,6 +80,8 @@ const SignPage = () => {
             <Typography color="gray" className="mt-1 font-normal">
               Hello,Lets get started
             </Typography>
+            <Typography variant="h6" color="red" className="mb-3">{message}</Typography>
+
             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
               <div className="mb-1 flex flex-col gap-6">
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
